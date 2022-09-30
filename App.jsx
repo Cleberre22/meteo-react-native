@@ -1,28 +1,40 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import DateTime from "./components/DateTime";
 import WeatherScroll from "./components/WeatherScroll";
 
-
-export default function App() {
+const API_KEY ='49cc8c821cd2aff9af04c9f98c36eb74';
 
 const img = require('./assets/imageBg.jpg')
 
-  const [meteo, setMeteo] = useState([]);
+export default function App() {
+  
+  const [data, setData] = useState({});
+
   useEffect(() => {
-    getMeteo();
-  }, []); // Sans les crochets ça tourne en boucle
-  const getMeteo = async () => {
-    await axios.get("http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=d98f2eb98f1877cd494f481c2c2ca502")
-      .then((res) => {
-        setMeteo(res.data);
+    navigator.geolocation.getCurrentPosition((success) => {
+
+      let { latitude, longitude } = success.coords;
+      fetchDataFromApi( latitude, longitude )
      
-      });
-  };
-  console.log(meteo.city);
+    }, (err) => {
+      if(err){
+        fetchDataFromApi("48.8563", "2.3487")
+      }  
+    })
+  }, [])
+
+  const fetchDataFromApi = (latitude, longitude) => {
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`)
+      .then(res => res.json())
+      .then(data => {
+
+      console.log(data)
+      setData(data)
+      })
+  }
 
   return (
     <View style={styles.container}>
@@ -37,9 +49,6 @@ const img = require('./assets/imageBg.jpg')
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   imageBg:{
     flex:1,

@@ -1,6 +1,8 @@
 import React, {useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { useEffect } from "react";
+
+const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
+const months = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const WeatherItem = ({title, value, unit}) => {
     return(
@@ -13,16 +15,33 @@ const WeatherItem = ({title, value, unit}) => {
 
 const DateTime = () => {
 
+    const [date, setDate] = useState('')
+    const [time, setTime] = useState('')
 
-    
+    useEffect (() => {
+        setInterval(() => {
+            const time = new Date();
+            const month = time.getMonth();
+            const date = time.getDate();
+            const day = time.getDay();
+            const hour = time.getHours();
+            const minutes = time.getMinutes();
+             
+            setTime((hour) + ':' + (minutes < 10? '0'+minutes: minutes)) 
+           
+            setDate(days[day] + ', ' + date+ ' ' + months[month]) 
+        
+        }, 1000);
+    }, [])
+
   return (
     <View style={styles.container}>
       <View>
         <View>
-          <Text style={styles.heading}>12:12</Text>
+          <Text style={styles.heading}>{time}</Text>
         </View>
         <View>
-          <Text style={styles.subHeading}>Vendredi 30 Juin</Text>
+          <Text style={styles.subHeading}>{date}</Text>
         </View>
         <View style={styles.weatherItemContainer}>
             <WeatherItem title="Humidité" value="79" unit="%"/>    
@@ -32,7 +51,7 @@ const DateTime = () => {
             </View>
       </View>
       <View style={styles.rightAlign}>
-        <Text style={styles.timeZone}>France, Saint-Nazaire</Text>
+        <Text style={styles.timeZone}>Fruree, greheertze</Text>
         <Text style={styles.latLong}>4.22N 50E</Text>
       </View>
     </View>
