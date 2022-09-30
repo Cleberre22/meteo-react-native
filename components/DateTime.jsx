@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
+import { useEffect } from "react";
 
 const WeatherItem = ({title, value, unit}) => {
     return(
@@ -11,6 +12,9 @@ const WeatherItem = ({title, value, unit}) => {
 }
 
 const DateTime = () => {
+
+
+    
   return (
     <View style={styles.container}>
       <View>
@@ -73,6 +77,8 @@ const styles = StyleSheet.create({
     weatherItemContainer: {
         backgroundColor: "#18181b99",
         borderRadius: 10,
+        borderColor: "#eee",
+        borderWidth: 1,
         // marginLeft: 5,
         padding: 10,
         marginTop: 10,

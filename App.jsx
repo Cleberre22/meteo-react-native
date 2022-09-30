@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import DateTime from "./components/DateTime";
+import WeatherScroll from "./components/WeatherScroll";
+
 
 export default function App() {
 
@@ -26,6 +28,7 @@ const img = require('./assets/imageBg.jpg')
     <View style={styles.container}>
       <ImageBackground source={img} style={styles.imageBg}>
         <DateTime />
+        <WeatherScroll />
       </ImageBackground>
     </View>
   );
