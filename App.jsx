@@ -1,23 +1,13 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import { Button } from "@react-native-material/core";
-import { TextInput } from "@react-native-material/core";
-
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-/>
-
+import DateTime from "./components/DateTime";
 
 export default function App() {
+
+const img = require('./assets/imageBg.jpg')
 
   const [meteo, setMeteo] = useState([]);
   useEffect(() => {
@@ -34,11 +24,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Hey mec, elle est ou ma caisse ,?</Text>
-      <Text>Nom: {meteo.name}</Text>
-      <TextInput id="name" variant="outlined" label="Label" style={{ margin: 16 }} />
-      <Button title="Click Me" onPress={() => alert("🎉🎉🎉")}/>
-      <StatusBar style="auto" />
+      <ImageBackground source={img} style={styles.imageBg}>
+        <DateTime />
+      </ImageBackground>
     </View>
   );
 }
@@ -46,8 +34,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    // backgroundColor: "#fff",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
+  imageBg:{
+    flex:1,
+    resizeMode:"cover",
+    justifyContent:"center"
+  }
 });
